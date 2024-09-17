@@ -136,7 +136,7 @@ export const updateProfile = catchAsyncErrors(async (req, res, next) => {
     (!firstNiche || !secondNiche || !thirdNiche)
   ) {
     return next(
-      new ErrorHandler("Please provide your all preferred job niches.", 400)
+      new ErrorHandler("Please provide your all preferred job niches", 400)
     );
   }
   if (req.files) {
@@ -164,7 +164,7 @@ export const updateProfile = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     user,
-    message: "Profile updated.",
+    message: "Profile updated",
   });
 });
 
@@ -174,16 +174,16 @@ export const updatePassword = catchAsyncErrors(async (req, res, next) => {
   const isPasswordMatched = await user.comparePassword(req.body.oldPassword);
 
   if (!isPasswordMatched) {
-    return next(new ErrorHandler("Old password is incorrect.", 400));
+    return next(new ErrorHandler("Old password is incorrect", 400));
   }
 
   if (req.body.newPassword !== req.body.confirmPassword) {
     return next(
-      new ErrorHandler("New password & confirm password do not match.", 400)
+      new ErrorHandler("New password & confirm password do not match", 400)
     );
   }
 
   user.password = req.body.newPassword;
   await user.save();
-  sendToken(user, 200, res, "Password updated successfully.");
+  sendToken(user, 200, res, "Password updated successfully");
 });
